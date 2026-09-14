@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zad Workspace | زاد وورك سبيس</title>
+<meta name="description" content="مساحة عمل مشتركة في أسيوط — زاد وورك سبيس. مساحات هادئة ومشتركة، غرف اجتماعات وكورسات، أسعار مرنة بالساعة أو اشتراك شهري.">
+<style>
+:root{
+  --green:#5E7248;
+  --green-dark:#3B4A30;
+  --cream:#F7F4EA;
+  --cream-2:#EEE8D6;
+  --wood:#C99B5B;
+  --ink:#26291F;
+  --muted:#6b6f61;
+  --white:#ffffff;
+  --radius:14px;
+  --shadow:0 8px 24px rgba(38,41,31,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.7;
+}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+.container{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+h1,h2,h3{margin:0 0 .5em;line-height:1.3}
+h2{font-size:clamp(24px,3.5vw,34px);color:var(--green-dark)}
+.eyebrow{color:var(--wood);font-weight:700;letter-spacing:.03em;font-size:14px;margin-bottom:8px;display:block}
+.lead{color:var(--muted);font-size:17px;max-width:640px}
+.center{text-align:center;margin-left:auto;margin-right:auto}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border-radius:999px;font-weight:700;font-size:15px;
+  border:2px solid transparent;cursor:pointer;transition:.2s;
+}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-dark)}
+.btn-outline{border-color:var(--green);color:var(--green);background:transparent}
+.btn-outline:hover{background:var(--green);color:#fff}
+.btn-light{background:#fff;color:var(--green)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* icon system */
+.icon-badge{
+  display:flex;align-items:center;justify-content:center;flex:none;
+  border-radius:14px;background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);
+  color:#fff;box-shadow:0 6px 14px rgba(59,74,48,.28);
+}
+.icon-badge svg{width:22px;height:22px}
+.icon-badge.on-dark{background:rgba(255,255,255,.16);color:#fff;box-shadow:none}
+.icon-badge.round{border-radius:50%}
+
+/* header */
+header{
+  position:sticky;top:0;z-index:50;background:rgba(247,244,236,.92);
+  backdrop-filter:saturate(180%) blur(8px);
+  border-bottom:1px solid #e6e1d2;
+}
+.nav{display:flex;align-items:center;justify-content:space-between;padding-block:14px}
+.logo{display:flex;align-items:center}
+.logo-img{height:42px;width:auto;display:block}
+.nav-links{display:flex;gap:26px;font-weight:600;font-size:15px}
+.nav-links a:hover{color:var(--green)}
+.nav-actions{display:flex;align-items:center;gap:12px}
+@media (max-width:780px){.nav-links{display:none}}
+
+/* hero */
+.hero{
+  padding:0;
+  background:var(--cream);
+}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;min-height:640px}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr;min-height:auto}}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;padding:60px 56px}
+@media (max-width:860px){.hero-copy{padding:48px 20px 40px}}
+.hero-copy .eyebrow{position:relative;padding-bottom:10px}
+.hero-copy .eyebrow::after{content:"";position:absolute;bottom:0;right:0;width:40px;height:3px;background:var(--wood)}
+html.en .hero-copy .eyebrow::after{right:auto;left:0}
+.hero h1{font-size:clamp(34px,4.6vw,58px);color:var(--green-dark);font-weight:800;letter-spacing:-.01em;max-width:11ch}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.hero-links{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:13.5px}
+.hero-links a{color:var(--green-dark);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.hero-links a:hover{color:var(--green)}
+.hero-links .sep{color:#c7bfa1}
+.hero-media{position:relative;overflow:hidden;background:#e3ddca;min-height:340px}
+.hero-media img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(38,41,31,.28),transparent 55%)}
+.hero-badges{display:flex;align-items:flex-start;gap:34px;margin-top:36px;flex-wrap:wrap}
+.hero-badges .hb-item{display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+.hero-badges .hb-icon{
+  width:36px;height:36px;border-radius:10px;background:var(--cream-2);color:var(--wood);
+  display:flex;align-items:center;justify-content:center;flex:none;
+}
+.hero-badges b{display:block;color:var(--green-dark);font-size:18px;font-weight:800}
+.hero-badges .hb-label{font-size:12px;color:var(--muted)}
+@media (max-width:480px){.hero-badges{gap:24px}}
+
+/* live open/closed status */
+.status-pill{
+  display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:999px;
+  font-size:13.5px;font-weight:700;background:rgba(107,111,97,.1);color:var(--muted);
+}
+.status-pill .status-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.status-pill.open{background:rgba(94,114,72,.13);color:var(--green-dark)}
+.status-pill.open .status-dot{animation:statusPulse 1.6s ease-in-out infinite}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.announce-bar{background:var(--green-dark);text-align:center;padding:9px 16px}
+.announce-bar .status-pill{background:none;padding:0;color:#fff;font-size:13px}
+.announce-bar .status-dot{background:#fff;opacity:.5}
+.announce-bar .status-pill.open .status-dot{opacity:1;background:#9fe08a}
+@media (max-width:480px){.announce-bar .status-pill{font-size:12px}}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+@media (max-width:860px){.about-grid{grid-template-columns:1fr}}
+.about-media{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.about-media img{width:100%;aspect-ratio:16/11;object-fit:cover;background:#e3ddca}
+
+/* services */
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;
+}
+@media (max-width:780px){.services-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.services-grid{grid-template-columns:1fr}}
+.service-card{
+  padding:26px 24px;border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:16px;align-items:flex-start;
+  border-top:3px solid transparent;transition:.25s;
+}
+.service-card:hover{transform:translateY(-4px);border-top-color:var(--wood);box-shadow:0 14px 30px rgba(38,41,31,.12)}
+.service-card .icon-badge{width:48px;height:48px}
+.service-card h3{font-size:16px;margin:0 0 4px;color:var(--green-dark)}
+.service-card p{margin:0;font-size:13.5px;color:var(--muted)}
+
+/* services v2 - alt design: each service merged into a photo (experiment, revertible) */
+.services-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+@media (max-width:780px){.services-photo-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.services-photo-grid{grid-template-columns:1fr}}
+.pservice{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3;background:#e3ddca}
+.pservice-media{position:absolute;inset:0}
+.pservice-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .7s ease, transform .7s ease}
+.pservice-media img.alt{opacity:0}
+.pservice:hover .pservice-media img.base{transform:scale(1.07)}
+.pservice:hover .pservice-media img.alt{opacity:1}
+.pservice-scrim{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;
+  background:linear-gradient(0deg,rgba(20,22,15,.85) 0%,rgba(20,22,15,.4) 48%,transparent 78%);color:#fff;
+}
+.pservice-scrim h3{margin:0 0 4px;font-size:16.5px;color:#fff}
+.pservice-scrim p{margin:0;font-size:12.5px;color:rgba(255,255,255,.85);line-height:1.55}
+.pservice-scrim .note{margin-top:7px;font-size:11.5px;color:#e9c98a;font-weight:700}
+
+/* gallery */
+#gallery{padding-bottom:56px;overflow:hidden}
+.gallery-strip{
+  position:relative;margin-top:30px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
+}
+.gallery-track{display:flex;gap:18px;width:max-content;animation:marquee 38s linear infinite}
+.gallery-strip:hover .gallery-track{animation-play-state:paused}
+.gallery-item{display:flex;flex-direction:column;gap:9px;flex:none;width:190px}
+.gallery-photo{
+  width:100%;height:260px;border-radius:12px;overflow:hidden;
+  box-shadow:var(--shadow);background:#e3ddca;
+}
+.gallery-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s}
+.gallery-item:hover .gallery-photo img{transform:scale(1.05)}
+.gallery-item .cap{font-size:12.5px;font-weight:600;color:var(--muted);padding:0 2px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:600px){.gallery-item{width:145px}.gallery-photo{height:200px}}
+@media (prefers-reduced-motion:reduce){.gallery-track{animation:none;overflow-x:auto}}
+
+/* pricing */
+.price-section{background:var(--green-dark);color:#fff}
+.price-section h2{color:#fff}
+.price-section .lead{color:#cfd6c5}
+.price-tables{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:36px}
+@media (max-width:820px){.price-tables{grid-template-columns:1fr}}
+.price-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);padding:26px}
+.price-card h3{display:flex;align-items:center;gap:10px;font-size:19px}
+.price-card .sub{color:#cfd6c5;font-size:13.5px;margin-bottom:18px}
+.price-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.18);font-size:15px}
+.price-row:last-child{border-bottom:none}
+.price-row b{color:#fff;font-size:17px}
+.price-note{margin-top:26px;background:rgba(255,255,255,.06);border-radius:var(--radius);padding:20px 24px;font-size:13.5px;color:#d8ddcd}
+.price-note ul{margin:8px 0 0;padding-inline-start:20px}
+.price-note li{margin-bottom:4px}
+
+.rooms-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+@media (max-width:820px){.rooms-grid{grid-template-columns:1fr}}
+.room-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);padding:22px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.room-card .price{font-size:22px;font-weight:800;color:#fff;white-space:nowrap}
+.room-card .price small{display:block;font-size:11.5px;font-weight:600;color:#cfd6c5}
+
+.cards-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:22px}
+@media (max-width:900px){.cards-strip{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.cards-strip{grid-template-columns:repeat(2,1fr)}}
+.card-mini{background:#fff;color:var(--ink);border-radius:12px;padding:16px;text-align:center;box-shadow:var(--shadow)}
+.card-mini .h{font-weight:800;color:var(--green-dark)}
+.card-mini .p{font-size:20px;font-weight:800;margin:6px 0 2px;color:var(--green)}
+.card-mini .s{font-size:11.5px;color:var(--muted)}
+.card-mini .save{margin-top:6px;font-size:11px;font-weight:700;color:var(--wood)}
+
+/* location */
+.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:stretch}
+@media (max-width:860px){.loc-grid{grid-template-columns:1fr}}
+.info-box{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:28px}
+.info-row{display:flex;gap:14px;margin-bottom:20px}
+.info-row .ic{width:42px;height:42px;flex:none;border-radius:12px;background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 14px rgba(59,74,48,.28)}
+.info-row h4{margin:0 0 3px;font-size:15px}
+.info-row p{margin:0;color:var(--muted);font-size:14px}
+.map-wrap{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);min-height:320px}
+.map-wrap iframe{width:100%;height:100%;border:0;min-height:320px}
+
+/* contact */
+.contact-section{text-align:center}
+.contact-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+
+.social-grid{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.social-item{display:flex;flex-direction:column;align-items:center;gap:9px;width:74px}
+.social-item .badge{
+  width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;box-shadow:var(--shadow);transition:.2s;
+}
+.social-item .badge svg{width:26px;height:26px}
+.social-item:hover .badge{transform:translateY(-3px) scale(1.05)}
+.social-item span{font-size:12.5px;font-weight:600;color:var(--muted)}
+.badge.bg-whatsapp{background:#25D366}
+.badge.bg-instagram{background:radial-gradient(circle at 30% 110%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.badge.bg-tiktok{background:#111}
+.badge.bg-facebook{background:#1877F2}
+.badge.bg-call{background:var(--green)}
+
+.feedback-box{max-width:560px;margin:40px auto 0;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 28px;text-align:start}
+.feedback-box h3{margin:0 0 6px;font-size:17px;color:var(--green-dark)}
+.feedback-box .fb-sub{margin:0 0 18px;font-size:13.5px;color:var(--muted)}
+.fb-field{margin-bottom:14px}
+.fb-field label{display:block;font-size:13px;font-weight:600;color:var(--green-dark);margin-bottom:6px}
+.fb-field input,.fb-field textarea{
+  width:100%;border:1.5px solid #ddd6bf;border-radius:10px;padding:11px 14px;
+  font-family:inherit;font-size:14px;color:var(--ink);background:var(--cream);resize:vertical;
+}
+.fb-field input:focus,.fb-field textarea:focus{outline:none;border-color:var(--green)}
+.fb-field textarea{min-height:100px}
+.fb-note{font-size:12px;color:var(--muted);margin:0 0 16px}
+.fb-submit{width:100%;justify-content:center;border:none}
+.fb-status{margin-top:12px;font-size:13.5px;text-align:center;display:none}
+.fb-status.ok{color:var(--green-dark);display:block}
+.fb-status.err{color:#a33;display:block}
+
+footer{background:var(--green-dark);color:#cfd6c5;padding:30px 0;font-size:13.5px;text-align:center}
+footer b{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="announce-bar">
+  <div class="status-pill" id="statusPillBar">
+    <span class="status-dot"></span>
+    <span class="status-label" data-warm="1" data-ar="مواعيد العمل: 9ص–12ص يوميًا (الجمعة من 2 ظهرًا)" data-en="Hours: 9AM–12AM daily (Friday from 2PM)">مواعيد العمل: 9ص–12ص يوميًا (الجمعة من 2 ظهرًا)</span>
+  </div>
+</div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo"><img src="data:image/webp;base64,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" alt="زاد Workspace" class="logo-img"></a>
+    <nav class="nav-links">
+      <a href="#about" data-ar="عن زاد" data-en="About">عن زاد</a>
+      <a href="#services" data-ar="الخدمات" data-en="Services">الخدمات</a>
+      <a href="#gallery" data-ar="المساحة" data-en="Gallery">المساحة</a>
+      <a href="#pricing" data-ar="الأسعار" data-en="Pricing">الأسعار</a>
+      <a href="#location" data-ar="الموقع" data-en="Location">الموقع</a>
+      <a href="#join" data-ar="انضم لينا" data-en="Join us">انضم لينا</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-primary" href="https://wa.me/201503767627" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.61 15.06L2 22l5.09-1.35A10 10 0 1 0 12 2Zm5.63 14.27c-.24.68-1.19 1.25-1.96 1.41-.53.11-1.22.2-3.55-.76-2.98-1.23-4.9-4.24-5.05-4.44-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37h.57c.18 0 .43-.03.66.51.24.56.82 1.94.9 2.08.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.71 1.19 1.53 1.93 1.05.95 1.93 1.25 2.21 1.39.28.14.44.12.61-.07.16-.19.7-.81.89-1.09.19-.28.37-.23.63-.14.26.1 1.63.78 1.91.92.28.14.47.21.54.33.07.12.07.68-.17 1.36Z"/></svg>
+        <span>واتساب</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow" data-ar="أسيوط · شارع المحافظة" data-en="Asyut · Al-Mohafza St.">أسيوط · شارع المحافظة</span>
+      <h1 data-ar="مساحة تساعدك تركّز، وتنتج أكتر" data-en="A space built for focus — and getting things done">مساحة تساعدك تركّز، وتنتج أكتر</h1>
+      <p class="lead" data-ar="زاد وورك سبيس مساحة عمل مبتكرة في قلب أسيوط، بتساعد الطلاب وأصحاب الأعمال الحرة يوصلوا لأقصى تركيز وإنتاجية." data-en="Zad Workspace is a modern coworking space in the heart of Asyut, helping students and freelancers reach their best focus and productivity.">زاد وورك سبيس مساحة عمل مبتكرة في قلب أسيوط، بتساعد الطلاب وأصحاب الأعمال الحرة يوصلوا لأقصى تركيز وإنتاجية.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://wa.me/201503767627" target="_blank" rel="noopener">
+          <span data-ar="احجز مكانك دلوقتي" data-en="Book your spot">احجز مكانك دلوقتي</span>
+        </a>
+        <a class="btn btn-outline" href="#pricing">
+          <span data-ar="شوف الأسعار" data-en="See pricing">شوف الأسعار</span>
+        </a>
+      </div>
+      <div class="hero-links">
+        <a href="#gallery" data-ar="شوف المكان" data-en="See the space">شوف المكان</a>
+        <span class="sep">·</span>
+        <a href="#contact" data-ar="كلمنا" data-en="Talk to us">كلمنا</a>
+      </div>
+      <div class="hero-badges">
+        <div class="hb-item">
+          <div class="hb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <b data-ar="9ص–12ص" data-en="9AM–12AM">9ص–12ص</b>
+          <span class="hb-label" data-ar="مواعيد العمل يوميًا" data-en="Daily opening hours">مواعيد العمل يوميًا</span>
+        </div>
+        <div class="hb-item">
+          <div class="hb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/></svg></div>
+          <b data-ar="15 ج.م" data-en="15 EGP">15 ج.م</b>
+          <span class="hb-label" data-ar="تبدأ منها الساعة" data-en="Starting hourly rate">تبدأ منها الساعة</span>
+        </div>
+        <div class="hb-item">
+          <div class="hb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></svg></div>
+          <b data-ar="4 أنواع" data-en="4 types">4 أنواع</b>
+          <span class="hb-label" data-ar="مساحات مختلفة" data-en="of spaces">مساحات مختلفة</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-media"><img data-img="20241128_080400680_iOS" alt="زاد وورك سبيس مغمورة بالشمس" loading="eager"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container about-grid">
+    <div class="about-media"><img data-img="20241128_083017012_iOS" alt="حيطة زجاج زاد وورك سبيس" loading="lazy"></div>
+    <div>
+      <span class="eyebrow" data-ar="مين احنا" data-en="Who we are">مين احنا</span>
+      <h2 data-ar="مساحة عمل مبتكرة ومتكاملة" data-en="A modern, all-in-one workspace">مساحة عمل مبتكرة ومتكاملة</h2>
+      <p class="lead" data-ar="بنوفر لك بيئة هادئة ومرتبة، إنترنت سريع، وكل الأدوات اللي تخليك تشتغل أو تذاكر من غير أي تشتيت — سواء لوحدك أو مع فريقك." data-en="A calm, well-organised environment, fast internet, and everything you need to work or study without distractions — solo or with your team.">بنوفر لك بيئة هادئة ومرتبة، إنترنت سريع، وكل الأدوات اللي تخليك تشتغل أو تذاكر من غير أي تشتيت — سواء لوحدك أو مع فريقك.</p>
+    </div>
+  </div>
+</section>
+
+<section id="services" style="background:var(--cream-2)">
+  <div class="container">
+    <div class="center" style="max-width:640px">
+      <span class="eyebrow" data-ar="خدماتنا" data-en="Our services">خدماتنا</span>
+      <h2 data-ar="كل اللي محتاجه تحت سقف واحد" data-en="Everything you need, under one roof">كل اللي محتاجه تحت سقف واحد</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div><h3 data-ar="مساحة مشتركة" data-en="Shared space">مساحة مشتركة</h3><p data-ar="للأنشطة المشتركة والمذاكرة والتخطيط مع الآخرين" data-en="For group study, planning and collaborative work">للأنشطة المشتركة والمذاكرة والتخطيط مع الآخرين</p></div>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg></div>
+        <div><h3 data-ar="مساحة صامتة" data-en="Silent space">مساحة صامتة</h3><p data-ar="غرفة فردية هادئة للأعمال والمذاكرة الفردية" data-en="A quiet individual room for solo work and study">غرفة فردية هادئة للأعمال والمذاكرة الفردية</p></div>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div><h3 data-ar="غرفة اجتماعات" data-en="Meeting room">غرفة اجتماعات</h3><p data-ar="لعقد الاجتماعات وعرض المشاريع والأنشطة الطلابية" data-en="For meetings, project pitches and student activities">لعقد الاجتماعات وعرض المشاريع والأنشطة الطلابية</p></div>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m22 10-10-5L2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5"/></svg></div>
+        <div><h3 data-ar="غرفة كورسات" data-en="Courses room">غرفة كورسات</h3><p data-ar="مجهزة للكورسات والمجموعات الطلابية وكورسات الإجازات" data-en="Equipped for courses, study groups and holiday classes">مجهزة للكورسات والمجموعات الطلابية وكورسات الإجازات</p></div>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h7a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-7a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h8Z"/></svg></div>
+        <div><h3 data-ar="كتب للاستعارة" data-en="Books to borrow">كتب للاستعارة</h3><p data-ar="مكتبة صغيرة متاحة لرواد المكان" data-en="A small library available to members">مكتبة صغيرة متاحة لرواد المكان</p></div>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+        <div><h3 data-ar="أدوات مكتبية" data-en="Office supplies">أدوات مكتبية</h3><p data-ar="كل اللي محتاجه من أدوات متاحة عندنا" data-en="Everything you need, available on site">كل اللي محتاجه من أدوات متاحة عندنا</p></div>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M6 17v4h12v-4"/></svg></div>
+        <div><h3 data-ar="طباعة وتصوير" data-en="Printing & copying">طباعة وتصوير</h3><p data-ar="خدمة طباعة وتصوير المستندات" data-en="On-site printing and copying service">خدمة طباعة وتصوير المستندات</p></div>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M2 8h16v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg></div>
+        <div><h3 data-ar="مساحة استراحة" data-en="Break area">مساحة استراحة</h3><p data-ar="ركن مريح تاخد فيه بريك بين شغلك" data-en="A comfortable corner to take a break">ركن مريح تاخد فيه بريك بين شغلك</p></div>
+      </div>
+      <div class="service-card">
+        <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><rect x="17" y="12" width="4" height="6" rx="1.4"/><rect x="3" y="12" width="4" height="6" rx="1.4"/></svg></div>
+        <div><h3 data-ar="استشارة ومساعدة" data-en="Guidance & support">استشارة ومساعدة</h3><p data-ar="فريق زاد جاهز يساعدك ويوجهك وانت في المكان" data-en="The Zad team is on hand to help and guide you">فريق زاد جاهز يساعدك ويوجهك وانت في المكان</p></div>
+      </div>
+    </div>
+    <!-- النسخة التانية (V2 - صور مدمجة) محفوظة هنا لو عايزين نرجعلها -->
+    <!--
+    <div class="services-photo-grid">
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_080523489_iOS" alt="مساحة مشتركة">
+          <img class="alt" data-img="20241128_080731741_iOS" alt="">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="مساحة مشتركة" data-en="Shared space">مساحة مشتركة</h3>
+          <p data-ar="للأنشطة المشتركة والمذاكرة والتخطيط مع الآخرين" data-en="For group study, planning and collaborative work">للأنشطة المشتركة والمذاكرة والتخطيط مع الآخرين</p>
+        </div>
+      </div>
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_080149597_iOS" alt="مساحة صامتة">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="مساحة صامتة" data-en="Silent space">مساحة صامتة</h3>
+          <p data-ar="غرفة فردية هادئة للأعمال والمذاكرة الفردية" data-en="A quiet individual room for solo work and study">غرفة فردية هادئة للأعمال والمذاكرة الفردية</p>
+        </div>
+      </div>
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_082320554_iOS" alt="غرفة اجتماعات">
+          <img class="alt" data-img="20241128_083017012_iOS" alt="">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="غرفة اجتماعات" data-en="Meeting room">غرفة اجتماعات</h3>
+          <p data-ar="لعقد الاجتماعات وعرض المشاريع والأنشطة الطلابية" data-en="For meetings, project pitches and student activities">لعقد الاجتماعات وعرض المشاريع والأنشطة الطلابية</p>
+        </div>
+      </div>
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_083239756_iOS" alt="غرفة كورسات">
+          <img class="alt" data-img="20241128_082039418_iOS" alt="">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="غرفة كورسات" data-en="Courses room">غرفة كورسات</h3>
+          <p data-ar="مجهزة للكورسات والمجموعات الطلابية وكورسات الإجازات" data-en="Equipped for courses, study groups and holiday classes">مجهزة للكورسات والمجموعات الطلابية وكورسات الإجازات</p>
+        </div>
+      </div>
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_080407797_iOS" alt="كتب للاستعارة">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="كتب للاستعارة" data-en="Books to borrow">كتب للاستعارة</h3>
+          <p data-ar="مكتبة صغيرة متاحة لرواد المكان" data-en="A small library available to members">مكتبة صغيرة متاحة لرواد المكان</p>
+          <span class="note" data-ar="شايف كتاب حلو ينضاف؟ قولّنا!" data-en="Know a book we should add? Tell us!">شايف كتاب حلو ينضاف؟ قولّنا!</span>
+        </div>
+      </div>
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_080613360_iOS" alt="أدوات مكتبية">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="أدوات مكتبية" data-en="Office supplies">أدوات مكتبية</h3>
+          <p data-ar="كل اللي محتاجه من أدوات متاحة عندنا" data-en="Everything you need, available on site">كل اللي محتاجه من أدوات متاحة عندنا</p>
+        </div>
+      </div>
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_080731741_iOS" alt="طباعة وتصوير">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="طباعة وتصوير" data-en="Printing & copying">طباعة وتصوير</h3>
+          <p data-ar="خدمة طباعة وتصوير المستندات" data-en="On-site printing and copying service">خدمة طباعة وتصوير المستندات</p>
+        </div>
+      </div>
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_080440561_iOS" alt="مساحة استراحة">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="مساحة استراحة" data-en="Break area">مساحة استراحة</h3>
+          <p data-ar="ركن مريح تاخد فيه بريك بين شغلك" data-en="A comfortable corner to take a break">ركن مريح تاخد فيه بريك بين شغلك</p>
+        </div>
+      </div>
+      <div class="pservice">
+        <div class="pservice-media">
+          <img class="base" data-img="20241128_082039418_iOS" alt="استشارة ومساعدة">
+        </div>
+        <div class="pservice-scrim">
+          <h3 data-ar="استشارة ومساعدة" data-en="Guidance & support">استشارة ومساعدة</h3>
+          <p data-ar="فريق زاد جاهز يساعدك ويوجهك وانت في المكان" data-en="The Zad team is on hand to help and guide you">فريق زاد جاهز يساعدك ويوجهك وانت في المكان</p>
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="container">
+    <div class="center" style="max-width:640px">
+      <span class="eyebrow" data-ar="جولة سريعة" data-en="Quick tour">جولة سريعة</span>
+      <h2 data-ar="من جوه زاد" data-en="Inside Zad">من جوه زاد</h2>
+    </div>
+  </div>
+  <!-- ملاحظة: دول 6 صور مؤقتة للتجربة، خديجة هتحدد الصور النهائية بعد كده -->
+  <div class="gallery-strip">
+    <div class="gallery-track" id="galleryTrack">
+      <div class="gallery-item"><div class="gallery-photo"><img data-img="20241128_080149597_iOS" alt="زاد وورك سبيس" loading="lazy"></div><span class="cap">ركن هادي للتركيز</span></div>
+      <div class="gallery-item"><div class="gallery-photo"><img data-img="20241128_080407797_iOS" alt="زاد وورك سبيس" loading="lazy"></div><span class="cap">مساحة مشتركة ومرتبة</span></div>
+      <div class="gallery-item"><div class="gallery-photo"><img data-img="20241128_080440561_iOS" alt="زاد وورك سبيس" loading="lazy"></div><span class="cap">جلسة شغل جماعي</span></div>
+      <div class="gallery-item"><div class="gallery-photo"><img data-img="20241128_080523489_iOS" alt="زاد وورك سبيس" loading="lazy"></div><span class="cap">إضاءة طبيعية طول اليوم</span></div>
+      <div class="gallery-item"><div class="gallery-photo"><img data-img="20241128_080731741_iOS" alt="زاد وورك سبيس" loading="lazy"></div><span class="cap">تفاصيل بسيطة بترتاح لها</span></div>
+      <div class="gallery-item"><div class="gallery-photo"><img data-img="20241128_082039418_iOS" alt="زاد وورك سبيس" loading="lazy"></div><span class="cap">جو يساعدك تنتج أكتر</span></div>
+      <div class="gallery-item" aria-hidden="true"><div class="gallery-photo"><img data-img="20241128_080149597_iOS" alt="" loading="lazy"></div><span class="cap">ركن هادي للتركيز</span></div>
+      <div class="gallery-item" aria-hidden="true"><div class="gallery-photo"><img data-img="20241128_080407797_iOS" alt="" loading="lazy"></div><span class="cap">مساحة مشتركة ومرتبة</span></div>
+      <div class="gallery-item" aria-hidden="true"><div class="gallery-photo"><img data-img="20241128_080440561_iOS" alt="" loading="lazy"></div><span class="cap">جلسة شغل جماعي</span></div>
+      <div class="gallery-item" aria-hidden="true"><div class="gallery-photo"><img data-img="20241128_080523489_iOS" alt="" loading="lazy"></div><span class="cap">إضاءة طبيعية طول اليوم</span></div>
+      <div class="gallery-item" aria-hidden="true"><div class="gallery-photo"><img data-img="20241128_080731741_iOS" alt="" loading="lazy"></div><span class="cap">تفاصيل بسيطة بترتاح لها</span></div>
+      <div class="gallery-item" aria-hidden="true"><div class="gallery-photo"><img data-img="20241128_082039418_iOS" alt="" loading="lazy"></div><span class="cap">جو يساعدك تنتج أكتر</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="price-section">
+  <div class="container">
+    <div class="center" style="max-width:640px">
+      <span class="eyebrow" style="color:#a9d18e" data-ar="الأسعار" data-en="Pricing">الأسعار</span>
+      <h2 data-ar="أسعار مرنة تناسب احتياجك" data-en="Flexible pricing for every need">أسعار مرنة تناسب احتياجك</h2>
+      <p class="lead center" data-ar="ادفع بالساعة، أو وفّر مع اشتراك زاد كروت الشهري." data-en="Pay by the hour, or save with a monthly Zad Card subscription.">ادفع بالساعة، أو وفّر مع اشتراك زاد كروت الشهري.</p>
+    </div>
+
+    <div class="price-tables">
+      <div class="price-card">
+        <h3><span class="icon-badge on-dark" style="width:34px;height:34px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg></span> <span data-ar="المساحة الصامتة" data-en="Silent space">المساحة الصامتة</span></h3>
+        <div class="sub" data-ar="غرفة فردية هادئة، جيدة نفسيًا للعمل والمذاكرة الفردية" data-en="A quiet individual room, great for focused solo work">غرفة فردية هادئة، جيدة نفسيًا للعمل والمذاكرة الفردية</div>
+        <div class="price-row"><span data-ar="ساعة واحدة" data-en="1 hour">ساعة واحدة</span><b>20 ج.م</b></div>
+        <div class="price-row"><span data-ar="1-3 ساعات" data-en="1–3 hours">1-3 ساعات</span><b>40 ج.م</b></div>
+        <div class="price-row"><span data-ar="3-6 ساعات" data-en="3–6 hours">3-6 ساعات</span><b>50 ج.م</b></div>
+        <div class="price-row"><span data-ar="6-9 ساعات" data-en="6–9 hours">6-9 ساعات</span><b>60 ج.م</b></div>
+        <div class="price-row"><span data-ar="يوم كامل" data-en="Full day">يوم كامل</span><b>75 ج.م</b></div>
+      </div>
+
+      <div class="price-card">
+        <h3><span class="icon-badge on-dark" style="width:34px;height:34px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> <span data-ar="المساحة المشتركة" data-en="Shared space">المساحة المشتركة</span></h3>
+        <div class="sub" data-ar="للأنشطة المشتركة والتخطيط والعمل مع الآخرين" data-en="For collaborative work, planning and group activity">للأنشطة المشتركة والتخطيط والعمل مع الآخرين</div>
+        <div class="price-row"><span data-ar="ساعة واحدة" data-en="1 hour">ساعة واحدة</span><b>15 ج.م</b></div>
+        <div class="price-row"><span data-ar="1-3 ساعات" data-en="1–3 hours">1-3 ساعات</span><b>35 ج.م</b></div>
+        <div class="price-row"><span data-ar="3-6 ساعات" data-en="3–6 hours">3-6 ساعات</span><b>45 ج.م</b></div>
+        <div class="price-row"><span data-ar="6-9 ساعات" data-en="6–9 hours">6-9 ساعات</span><b>55 ج.م</b></div>
+        <div class="price-row"><span data-ar="يوم كامل" data-en="Full day">يوم كامل</span><b>70 ج.م</b></div>
+      </div>
+    </div>
+
+    <div class="rooms-grid">
+      <div class="room-card">
+        <div><h3 style="margin:0 0 4px;font-size:16px;display:flex;align-items:center;gap:9px"><span class="icon-badge on-dark" style="width:30px;height:30px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span> <span data-ar="غرفة اجتماعات" data-en="Meeting room">غرفة اجتماعات</span></h3><p style="margin:0;color:#cfd6c5;font-size:13.5px" data-ar="للاجتماعات وعرض المشاريع والشركات الناشئة" data-en="For meetings, pitches and startups">للاجتماعات وعرض المشاريع والشركات الناشئة</p></div>
+        <div class="price">70<small data-ar="ج.م / ساعة" data-en="EGP / hour">ج.م / ساعة</small></div>
+      </div>
+      <div class="room-card">
+        <div><h3 style="margin:0 0 4px;font-size:16px;display:flex;align-items:center;gap:9px"><span class="icon-badge on-dark" style="width:30px;height:30px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 10-10-5L2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5"/></svg></span> <span data-ar="غرفة كورسات" data-en="Courses room">غرفة كورسات</span></h3><p style="margin:0;color:#cfd6c5;font-size:13.5px" data-ar="للمجموعات الطلابية وكورسات الإجازات" data-en="For study groups and holiday courses">للمجموعات الطلابية وكورسات الإجازات</p></div>
+        <div class="price">80<small data-ar="ج.م / ساعة" data-en="EGP / hour">ج.م / ساعة</small></div>
+      </div>
+    </div>
+
+    <div style="margin-top:40px">
+      <h3 style="text-align:center;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px" data-ar="باقات كروت زاد الشهرية" data-en="Monthly Zad Card packages"><span class="icon-badge on-dark" style="width:34px;height:34px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span> باقات كروت زاد الشهرية</h3>
+      <p class="lead center" style="color:#cfd6c5" data-ar="لو بتذاكر أو بتشتغل كتير، ممكن توفر عن طريق اشتراكات زاد الشهرية" data-en="If you work or study often, save with a monthly Zad subscription">لو بتذاكر أو بتشتغل كتير، ممكن توفر عن طريق اشتراكات زاد الشهرية</p>
+      <div class="cards-strip">
+        <div class="card-mini"><div class="h">50 <span data-ar="ساعة" data-en="hrs">ساعة</span></div><div class="p">270ج</div><div class="s" data-ar="شهريًا" data-en="/ month">شهريًا</div><div class="save" data-ar="بتوفر 480ج" data-en="Save 480 EGP">بتوفر 480ج</div></div>
+        <div class="card-mini"><div class="h">80 <span data-ar="ساعة" data-en="hrs">ساعة</span></div><div class="p">400ج</div><div class="s" data-ar="شهريًا" data-en="/ month">شهريًا</div><div class="save" data-ar="بتوفر 800ج" data-en="Save 800 EGP">بتوفر 800ج</div></div>
+        <div class="card-mini"><div class="h">120 <span data-ar="ساعة" data-en="hrs">ساعة</span></div><div class="p">540ج</div><div class="s" data-ar="شهريًا" data-en="/ month">شهريًا</div><div class="save" data-ar="بتوفر 1260ج" data-en="Save 1,260 EGP">بتوفر 1260ج</div></div>
+        <div class="card-mini"><div class="h">180 <span data-ar="ساعة" data-en="hrs">ساعة</span></div><div class="p">720ج</div><div class="s" data-ar="شهريًا" data-en="/ month">شهريًا</div><div class="save" data-ar="بتوفر 1980ج" data-en="Save 1,980 EGP">بتوفر 1980ج</div></div>
+        <div class="card-mini"><div class="h">600 <span data-ar="ساعة" data-en="hrs">ساعة</span></div><div class="p">2400ج</div><div class="s" data-ar="شهريًا (لـ3 أشخاص)" data-en="/ month (3 people)">شهريًا (لـ3 أشخاص)</div></div>
+      </div>
+      <div class="price-note">
+        <b data-ar="شروط الاشتراك:" data-en="Subscription terms:">شروط الاشتراك:</b>
+        <ul>
+          <li data-ar="جميع الاشتراكات لشخص مشترك واحد فقط" data-en="All subscriptions are for a single member only">جميع الاشتراكات لشخص مشترك واحد فقط</li>
+          <li data-ar="الاشتراكات سارية لمدة 30 يوم فقط" data-en="Subscriptions are valid for 30 days only">الاشتراكات سارية لمدة 30 يوم فقط</li>
+          <li data-ar="الاشتراك متاح لغرفتي المساحة المشتركة والصامتة فقط" data-en="Subscriptions apply to the shared and silent spaces only">الاشتراك متاح لغرفتي المساحة المشتركة والصامتة فقط</li>
+          <li data-ar="عند إلغاء الاشتراك يتم خصم الساعات المستهلكة بالسعر الطبيعي، خلال 3 أيام كحد أقصى" data-en="On cancellation, used hours are deducted at the normal rate, within 3 days maximum">عند إلغاء الاشتراك يتم خصم الساعات المستهلكة بالسعر الطبيعي، خلال 3 أيام كحد أقصى</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="location" style="background:var(--cream-2)">
+  <div class="container">
+    <div class="center" style="max-width:640px">
+      <span class="eyebrow" data-ar="زورونا" data-en="Visit us">زورونا</span>
+      <h2 data-ar="فين هتلاقينا" data-en="Where to find us">فين هتلاقينا</h2>
+    </div>
+    <div class="loc-grid" style="margin-top:32px">
+      <div class="info-box">
+        <div class="info-row">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><h4 data-ar="العنوان" data-en="Address">العنوان</h4><p data-ar="شارع المحافظة، بجوار عصائر الفانوس، الدور الثاني (أمام سوشي موتشي) — أسيوط" data-en="Al-Mohafza St., next to Al-Fanous Juices, 2nd floor (opposite Sushi Mochi) — Asyut">شارع المحافظة، بجوار عصائر الفانوس، الدور الثاني (أمام سوشي موتشي) — أسيوط</p></div>
+        </div>
+        <div class="info-row">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div>
+            <h4 data-ar="مواعيد العمل" data-en="Opening hours">مواعيد العمل</h4>
+            <p data-ar="يوميًا من الساعة 9 صباحًا، ما عدا الجمعة من الساعة 2 ظهرًا" data-en="Daily from 9 AM, except Friday from 2 PM">يوميًا من الساعة 9 صباحًا، ما عدا الجمعة من الساعة 2 ظهرًا</p>
+            <div class="status-pill" id="statusPill2" style="margin-top:10px">
+              <span class="status-dot"></span>
+              <span class="status-label" data-ar="مواعيد العمل: 9ص–12ص يوميًا (الجمعة من 2 ظهرًا)" data-en="Hours: 9AM–12AM daily (Friday from 2PM)">مواعيد العمل: 9ص–12ص يوميًا (الجمعة من 2 ظهرًا)</span>
+            </div>
+            <p style="margin-top:10px;font-size:12.5px" data-ar="في أيام الامتحانات (ميد أو فاينل) بنفتح 24 ساعة." data-en="During exam periods (midterms/finals) we're open 24 hours.">في أيام الامتحانات (ميد أو فاينل) بنفتح 24 ساعة.</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 1h2a2 2 0 0 1 2 1.72c.12.9.34 1.79.65 2.65a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.43-1.22a2 2 0 0 1 2.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0 1 22 16.92Z"/></svg></div>
+          <div><h4 data-ar="تليفون / واتساب" data-en="Phone / WhatsApp">تليفون / واتساب</h4><p><a href="tel:01503767627">01503767627</a></p></div>
+        </div>
+        <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px" href="https://wa.me/201503767627" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.61 15.06L2 22l5.09-1.35A10 10 0 1 0 12 2Zm5.63 14.27c-.24.68-1.19 1.25-1.96 1.41-.53.11-1.22.2-3.55-.76-2.98-1.23-4.9-4.24-5.05-4.44-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37h.57c.18 0 .43-.03.66.51.24.56.82 1.94.9 2.08.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.71 1.19 1.53 1.93 1.05.95 1.93 1.25 2.21 1.39.28.14.44.12.61-.07.16-.19.7-.81.89-1.09.19-.28.37-.23.63-.14.26.1 1.63.78 1.91.92.28.14.47.21.54.33.07.12.07.68-.17 1.36Z"/></svg>
+          <span data-ar="راسلنا على واتساب" data-en="Message us on WhatsApp">راسلنا على واتساب</span>
+        </a>
+      </div>
+      <div class="map-wrap">
+        <iframe src="https://www.google.com/maps?q=55RQ%2B2R5,+Asyut&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Zad Workspace location"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join" style="background:var(--green-dark)">
+  <div class="container center" style="max-width:640px">
+    <span class="eyebrow" style="color:#a9d18e" data-ar="انضم لينا" data-en="Join us">انضم لينا</span>
+    <h2 style="color:#fff" data-ar="جاهز تبقى جزء من زاد؟" data-en="Ready to join Zad?">جاهز تبقى جزء من زاد؟</h2>
+    <p class="lead center" style="color:#cfd6c5" data-ar="قدّم دلوقتي واحجز مكانك، الاستمارة بتاخد أقل من دقيقة" data-en="Apply now and reserve your spot — it takes less than a minute">قدّم دلوقتي واحجز مكانك، الاستمارة بتاخد أقل من دقيقة</p>
+    <div style="margin-top:28px">
+      <a class="btn btn-light" href="https://bit.ly/4uX1Btk?r=qr" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        <span data-ar="قدّم دلوقتي" data-en="Apply now">قدّم دلوقتي</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="container">
+    <span class="eyebrow" data-ar="تواصل معانا" data-en="Get in touch">تواصل معانا</span>
+    <h2 data-ar="جاهز تبدأ؟" data-en="Ready to get started?">جاهز تبدأ؟</h2>
+    <p class="lead center" data-ar="احجز مكانك دلوقتي أو كلمنا لو عندك أي سؤال" data-en="Book your spot now, or reach out if you have any questions">احجز مكانك دلوقتي أو كلمنا لو عندك أي سؤال</p>
+    <div class="contact-actions">
+      <a class="btn btn-primary" href="https://wa.me/201503767627" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.61 15.06L2 22l5.09-1.35A10 10 0 1 0 12 2Zm5.63 14.27c-.24.68-1.19 1.25-1.96 1.41-.53.11-1.22.2-3.55-.76-2.98-1.23-4.9-4.24-5.05-4.44-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37h.57c.18 0 .43-.03.66.51.24.56.82 1.94.9 2.08.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.71 1.19 1.53 1.93 1.05.95 1.93 1.25 2.21 1.39.28.14.44.12.61-.07.16-.19.7-.81.89-1.09.19-.28.37-.23.63-.14.26.1 1.63.78 1.91.92.28.14.47.21.54.33.07.12.07.68-.17 1.36Z"/></svg>
+        <span data-ar="واتساب" data-en="WhatsApp">واتساب</span>
+      </a>
+      <a class="btn btn-outline" href="tel:01503767627">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 1h2a2 2 0 0 1 2 1.72c.12.9.34 1.79.65 2.65a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.43-1.22a2 2 0 0 1 2.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0 1 22 16.92Z"/></svg>
+        <span data-ar="اتصال مباشر" data-en="Call us">اتصال مباشر</span>
+      </a>
+    </div>
+
+    <div class="social-grid">
+      <a class="social-item" href="https://wa.me/201503767627" target="_blank" rel="noopener">
+        <span class="badge bg-whatsapp"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.61 15.06L2 22l5.09-1.35A10 10 0 1 0 12 2Zm5.63 14.27c-.24.68-1.19 1.25-1.96 1.41-.53.11-1.22.2-3.55-.76-2.98-1.23-4.9-4.24-5.05-4.44-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37h.57c.18 0 .43-.03.66.51.24.56.82 1.94.9 2.08.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.71 1.19 1.53 1.93 1.05.95 1.93 1.25 2.21 1.39.28.14.44.12.61-.07.16-.19.7-.81.89-1.09.19-.28.37-.23.63-.14.26.1 1.63.78 1.91.92.28.14.47.21.54.33.07.12.07.68-.17 1.36Z"/></svg></span>
+        <span data-ar="واتساب" data-en="WhatsApp">واتساب</span>
+      </a>
+      <a class="social-item" href="https://www.instagram.com/zadworkspace/" target="_blank" rel="noopener">
+        <span class="badge bg-instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.15" fill="#fff" stroke="none"/></svg></span>
+        <span data-ar="إنستجرام" data-en="Instagram">إنستجرام</span>
+      </a>
+      <a class="social-item" href="https://www.tiktok.com/@zadworkspace" target="_blank" rel="noopener">
+        <span class="badge bg-tiktok"><svg viewBox="0 0 24 24" fill="#fff"><path d="M15.8 3c.4 2.3 1.9 4 4.5 4.2v3c-1.6 0-3.1-.5-4.4-1.5v6.6a5.9 5.9 0 1 1-5.1-5.85v3.1a2.75 2.75 0 1 0 2.1 2.67V3Z"/></svg></span>
+        <span data-ar="تيك توك" data-en="TikTok">تيك توك</span>
+      </a>
+      <a class="social-item" href="https://www.facebook.com/p/Zad-Workspace-%D9%85%D8%B3%D8%A7%D8%AD%D8%A9-%D8%B9%D9%85%D9%84-%D8%B2%D8%A7%D8%AF-61566797195711/" target="_blank" rel="noopener">
+        <span class="badge bg-facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M13.5 21v-7.5h2.5l.4-3H13.5V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.3A21 21 0 0 0 14.3 4c-2.2 0-3.7 1.34-3.7 3.8V10.5H8v3h2.6V21Z"/></svg></span>
+        <span data-ar="فيسبوك" data-en="Facebook">فيسبوك</span>
+      </a>
+      <a class="social-item" href="tel:01503767627">
+        <span class="badge bg-call"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 1h2a2 2 0 0 1 2 1.72c.12.9.34 1.79.65 2.65a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.43-1.22a2 2 0 0 1 2.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0 1 22 16.92Z"/></svg></span>
+        <span data-ar="اتصال" data-en="Call">اتصال</span>
+      </a>
+    </div>
+
+    <form class="feedback-box" id="feedbackForm">
+      <h3 data-ar="عندك اقتراح أو شكوى؟" data-en="Have a suggestion or complaint?">عندك اقتراح أو شكوى؟</h3>
+      <p class="fb-sub" data-ar="اكتبها هنا وهتوصل لفريق زاد مباشرة. الاسم اختياري ومش لازم تسيبي أي بيانات تعرّفك." data-en="Write it here and it'll reach the Zad team directly. Name is optional — no identifying info required.">اكتبها هنا وهتوصل لفريق زاد مباشرة. الاسم اختياري ومش لازم تسيبي أي بيانات تعرّفك.</p>
+      <div class="fb-field">
+        <label for="fbName" data-ar="الاسم (اختياري)" data-en="Name (optional)">الاسم (اختياري)</label>
+        <input type="text" id="fbName" name="name" autocomplete="off">
+      </div>
+      <div class="fb-field">
+        <label for="fbMsg" data-ar="اقتراحك أو شكواك" data-en="Your suggestion or complaint">اقتراحك أو شكواك</label>
+        <textarea id="fbMsg" name="message" required></textarea>
+      </div>
+      <p class="fb-note" data-ar="مش بنطلب إيميل ولا رقم تليفون — الرسالة بتتبعت مجهولة تمامًا." data-en="No email or phone required — the message is sent fully anonymous.">مش بنطلب إيميل ولا رقم تليفون — الرسالة بتتبعت مجهولة تمامًا.</p>
+      <button type="submit" class="btn btn-primary fb-submit" id="fbSubmitBtn" data-ar="إرسال" data-en="Send">إرسال</button>
+      <div class="fb-status" id="fbStatus"></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span data-ar="© 2026 " data-en="© 2026 ">© 2026 </span><b>Zad Workspace</b> — <span data-ar="أسيوط" data-en="Asyut">أسيوط</span>
+  </div>
+</footer>
+
+<script src="zad-workspace_images.js"></script>
+<script>
+(function(){
+  if (window.ZAD_IMAGES) {
+    document.querySelectorAll('img[data-img]').forEach(function(el){
+      var key = el.getAttribute('data-img');
+      if (window.ZAD_IMAGES[key]) el.src = window.ZAD_IMAGES[key];
+    });
+  }
+})();
+</script>
+
+<script>
+(function(){
+  // خليها true وقت الامتحانات (ميد/فاينل) عشان الصفحة تعرض إنكم فاتحين 24 ساعة
+  var EXAM_MODE_24H = false;
+
+  var pills = document.querySelectorAll('.status-pill');
+  if (!pills.length) return;
+  var isAr = !document.documentElement.classList.contains('en');
+
+  function cairoNow(){
+    var fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Africa/Cairo', hour12: false, weekday: 'short', hour: '2-digit', minute: '2-digit'
+    });
+    var map = {};
+    fmt.formatToParts(new Date()).forEach(function(p){ map[p.type] = p.value; });
+    var hour = parseInt(map.hour, 10);
+    if (hour === 24) hour = 0;
+    return { weekday: map.weekday, minutes: hour * 60 + parseInt(map.minute, 10) };
+  }
+
+  function updateStatus(){
+    var now = cairoNow();
+    var isFriday = now.weekday === 'Fri';
+    var openAt = isFriday ? 14 * 60 : 9 * 60;
+    var isOpen = EXAM_MODE_24H || (now.minutes >= openAt && now.minutes < 24 * 60);
+
+    var normalText;
+    if (isOpen && !EXAM_MODE_24H) {
+      normalText = isAr ? 'فاتحين دلوقتي، نورونا!' : "We're open now — come by!";
+    } else if (!EXAM_MODE_24H) {
+      normalText = isFriday
+        ? (isAr ? 'مقفولين دلوقتي، بنفتح الجمعة 2 الضهر' : "Closed now — opens Friday 2PM")
+        : (isAr ? 'مقفولين دلوقتي، بنفتح 9 الصبح' : 'Closed now — opens 9AM');
+    }
+    var warmText = EXAM_MODE_24H
+      ? (isAr ? 'فاتحين 24 ساعة أيام الامتحانات — إحنا دايمًا معاك، بس قولنا محتاج إيه!' : "Open 24h during exams — we've got you, just tell us what you need!")
+      : normalText;
+    var plainText = EXAM_MODE_24H
+      ? (isAr ? 'فاتحين 24 ساعة — أيام امتحانات!' : 'Open 24 hours — exam days!')
+      : normalText;
+
+    pills.forEach(function(el){
+      el.classList.toggle('open', isOpen);
+      var label = el.querySelector('.status-label');
+      if (label) label.textContent = label.dataset.warm ? warmText : plainText;
+    });
+  }
+
+  updateStatus();
+  setInterval(updateStatus, 60000);
+})();
+</script>
+
+<script>
+(function(){
+  var FEEDBACK_EMAIL = "khadeja.mn005@gmail.com";
+
+  var form = document.getElementById('feedbackForm');
+  if (!form) return;
+  var btn = document.getElementById('fbSubmitBtn');
+  var status = document.getElementById('fbStatus');
+  var isAr = !document.documentElement.classList.contains('en');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.className = 'fb-status';
+    status.textContent = '';
+
+    var message = document.getElementById('fbMsg').value.trim();
+    if (!message) return;
+
+    btn.disabled = true;
+    btn.style.opacity = '.6';
+
+    var payload = {
+      name: document.getElementById('fbName').value.trim() || (isAr ? 'بدون اسم' : 'Anonymous'),
+      message: message,
+      _subject: 'شكوى / اقتراح جديد — زاد وورك سبيس',
+      _captcha: 'false',
+      _template: 'table'
+    };
+
+    fetch('https://formsubmit.co/ajax/' + FEEDBACK_EMAIL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if (!res.ok) throw new Error('bad response');
+      return res.json();
+    }).then(function(){
+      status.className = 'fb-status ok';
+      status.textContent = isAr ? 'تم الإرسال، شكرًا لك! هتوصل لفريق زاد مباشرة.' : 'Sent — thank you! It will reach the Zad team directly.';
+      form.reset();
+    }).catch(function(){
+      status.className = 'fb-status err';
+      status.textContent = isAr ? 'في مشكلة أثناء الإرسال، جرّبي تاني أو كلمينا على واتساب.' : 'Something went wrong — please try again or message us on WhatsApp.';
+    }).finally(function(){
+      btn.disabled = false;
+      btn.style.opacity = '';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
