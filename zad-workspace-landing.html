@@ -66,12 +66,20 @@ header{
   backdrop-filter:saturate(180%) blur(8px);
   border-bottom:1px solid #e6e1d2;
 }
-.nav{display:flex;align-items:center;justify-content:flex-start;gap:48px;padding-block:14px}
+.nav{display:flex;align-items:center;justify-content:space-between;padding-block:14px}
+@media (min-width:780px){.nav{justify-content:flex-start;gap:48px}}
 .logo{display:flex;align-items:center}
 .logo-img{height:42px;width:auto;display:block}
 .nav-links{display:flex;gap:26px;font-weight:600;font-size:15px}
 .nav-links a:hover{color:var(--green)}
 @media (max-width:780px){.nav-links{display:none}}
+.menu-toggle{display:none;background:none;border:none;padding:8px;color:var(--green-dark);cursor:pointer}
+@media (max-width:780px){.menu-toggle{display:flex;align-items:center;justify-content:center}}
+.mobile-menu{display:none;flex-direction:column;padding-block:8px 18px;border-top:1px solid #e6e1d2}
+.mobile-menu a{padding:12px 4px;font-weight:600;font-size:15px;color:var(--ink);border-bottom:1px solid #efe9d8}
+.mobile-menu a:last-child{border-bottom:none}
+.mobile-menu.open{display:flex}
+@media (min-width:780px){.mobile-menu{display:none !important}}
 
 /* hero */
 .hero{
@@ -167,14 +175,18 @@ header{
 .stile-card p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
 .services-extra{margin-top:30px;text-align:center;font-size:13px;color:var(--muted)}
 .services-extra b{color:var(--green-dark)}
-.sc-controls{display:none;justify-content:center;gap:10px;margin:20px 0 0}
-@media (max-width:900px){.sc-controls{display:flex}}
+.services-viewport{position:relative}
 .sc-arrow{
-  width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:var(--shadow);
-  border:none;display:flex;align-items:center;justify-content:center;color:var(--green-dark);
-  cursor:pointer;flex:none;padding:0;
+  display:none;width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.8);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  box-shadow:0 4px 14px rgba(20,22,15,.2);
+  border:none;align-items:center;justify-content:center;color:var(--green-dark);
+  cursor:pointer;padding:0;position:absolute;top:38%;transform:translateY(-50%);z-index:2;
 }
-.sc-arrow:active{transform:scale(.94)}
+@media (max-width:900px){.sc-arrow{display:flex}}
+.sc-prev{right:16px}
+.sc-next{left:16px}
+.sc-arrow:active{transform:translateY(-50%) scale(.94)}
 
 /* services v2 - alt design: each service merged into a photo (experiment, revertible) */
 .services-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
@@ -275,9 +287,10 @@ header{
   position:fixed;bottom:20px;left:20px;z-index:60;
   display:flex;align-items:center;
   height:56px;width:56px;border-radius:999px;overflow:hidden;
-  background:#25D366;color:#fff;box-shadow:0 8px 20px rgba(20,22,15,.3);
-  transition:width .25s ease;
+  background:var(--green);color:#fff;box-shadow:0 8px 20px rgba(20,22,15,.3);
+  transition:width .25s ease,background .2s ease;
 }
+.wa-fab:hover{background:var(--green-dark)}
 .wa-fab svg{flex:none;width:26px;height:26px;margin:0 15px}
 .wa-fab-label{font-size:14px;font-weight:700;white-space:nowrap;opacity:0;transition:opacity .2s ease;padding-inline-end:18px}
 @media (hover:hover){
@@ -330,6 +343,17 @@ footer b{color:#fff}
       <a href="#location" data-ar="الموقع" data-en="Location">الموقع</a>
       <a href="#join" data-ar="انضم لينا" data-en="Join us">انضم لينا</a>
     </nav>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="mobileMenu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu container" id="mobileMenu">
+    <a href="#about" data-ar="عن زاد" data-en="About">عن زاد</a>
+    <a href="#services" data-ar="الخدمات" data-en="Services">الخدمات</a>
+    <a href="#gallery" data-ar="المساحة" data-en="Gallery">المساحة</a>
+    <a href="#pricing" data-ar="الأسعار" data-en="Pricing">الأسعار</a>
+    <a href="#location" data-ar="الموقع" data-en="Location">الموقع</a>
+    <a href="#join" data-ar="انضم لينا" data-en="Join us">انضم لينا</a>
   </div>
 </header>
 
@@ -376,14 +400,7 @@ footer b{color:#fff}
       <span class="eyebrow" data-ar="خدماتنا" data-en="Our services">خدماتنا</span>
       <h2 data-ar="كل اللي محتاجه تحت سقف واحد" data-en="Everything you need, under one roof">كل اللي محتاجه تحت سقف واحد</h2>
     </div>
-    <div class="sc-controls">
-      <button class="sc-arrow" id="servicesPrev" type="button" aria-label="السابق">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </button>
-      <button class="sc-arrow" id="servicesNext" type="button" aria-label="التالي">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      </button>
-    </div>
+    <div class="services-viewport">
     <div class="services-tiles" id="servicesTiles">
       <div class="stile">
         <div class="stile-media"><img data-img="20241128_080523489_iOS" alt="مساحة مشتركة"></div>
@@ -413,6 +430,13 @@ footer b{color:#fff}
           <p data-ar="مجهزة للكورسات والمجموعات الطلابية وكورسات الإجازات" data-en="Equipped for courses, study groups and holiday classes">مجهزة للكورسات والمجموعات الطلابية وكورسات الإجازات</p>
         </div>
       </div>
+    </div>
+    <button class="sc-arrow sc-prev" id="servicesPrev" type="button" aria-label="السابق">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <button class="sc-arrow sc-next" id="servicesNext" type="button" aria-label="التالي">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
     </div>
     <p class="services-extra"><b data-ar="وكمان متاح عندنا:" data-en="Also available:">وكمان متاح عندنا:</b> <span data-ar="كتب للاستعارة · أدوات مكتبية · طباعة وتصوير · مساحة استراحة · استشارة ومساعدة" data-en="Books to borrow · Office supplies · Printing & copying · Break area · Guidance & support">كتب للاستعارة · أدوات مكتبية · طباعة وتصوير · مساحة استراحة · استشارة ومساعدة</span></p>
     <!-- V1 (الأيقونات) محفوظة هنا لو عايزين نرجعلها -->
@@ -775,6 +799,24 @@ footer b{color:#fff}
 
 <script>
 (function(){
+  var toggle = document.getElementById('menuToggle');
+  var menu = document.getElementById('mobileMenu');
+  if (!toggle || !menu) return;
+  toggle.addEventListener('click', function(){
+    var isOpen = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
   var track = document.getElementById('servicesTiles');
   var prev = document.getElementById('servicesPrev');
   var next = document.getElementById('servicesNext');
@@ -822,8 +864,8 @@ footer b{color:#fff}
       normalText = isAr ? 'فاتحين دلوقتي، نورونا!' : "We're open now — come by!";
     } else if (!EXAM_MODE_24H) {
       normalText = isFriday
-        ? (isAr ? 'مقفولين دلوقتي، بنفتح الجمعة 2 الضهر' : "Closed now — opens Friday 2PM")
-        : (isAr ? 'مقفولين دلوقتي، بنفتح 9 الصبح' : 'Closed now — opens 9AM');
+        ? (isAr ? 'قافلين دلوقتي، بنفتح الجمعة 2 الضهر' : "Closed now — opens Friday 2PM")
+        : (isAr ? 'قافلين دلوقتي، بنفتح 9 الصبح' : 'Closed now — opens 9AM');
     }
     var warmText = EXAM_MODE_24H
       ? (isAr ? 'فاتحين 24 ساعة أيام الامتحانات — إحنا دايمًا معاك، بس قولنا محتاج إيه!' : "Open 24h during exams — we've got you, just tell us what you need!")
