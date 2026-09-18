@@ -95,6 +95,10 @@ header{
 .hero h1{font-size:clamp(36px,6vw,70px);color:#fff;font-weight:800;letter-spacing:-.01em;max-width:12ch}
 .hero-content .lead{color:rgba(255,255,255,.86);max-width:520px}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.hero-links{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:13.5px}
+.hero-links a{color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.hero-links a:hover{opacity:.8}
+.hero-links .sep{color:rgba(255,255,255,.45)}
 .hero-stats{display:flex;align-items:center;gap:22px;margin-top:42px;flex-wrap:wrap}
 .hero-stats .hs-div{width:1px;height:32px;background:rgba(255,255,255,.3);flex:none}
 .hero-stats b{display:block;color:#fff;font-size:19px;font-weight:800}
@@ -309,12 +313,11 @@ footer b{color:#fff}
       <a class="btn btn-primary" href="#contact">
         <span data-ar="كلمنا واحجز مكانك" data-en="Contact & book">كلمنا واحجز مكانك</span>
       </a>
-      <a class="btn btn-light" href="#pricing">
-        <span data-ar="اعرف أسعارنا" data-en="See our prices">اعرف أسعارنا</span>
-      </a>
-      <a class="btn btn-light" href="#gallery">
-        <span data-ar="شوف زاد من جوا" data-en="See Zad from inside">شوف زاد من جوا</span>
-      </a>
+    </div>
+    <div class="hero-links">
+      <a href="#pricing" data-ar="اعرف أسعارنا" data-en="See our prices">اعرف أسعارنا</a>
+      <span class="sep">·</span>
+      <a href="#gallery" data-ar="شوف زاد من جوا" data-en="See Zad from inside">شوف زاد من جوا</a>
     </div>
     <div class="hero-stats">
       <div class="hs-item"><b data-ar="9ص–12ص" data-en="9AM–12AM">9ص–12ص</b><span class="hs-label" data-ar="مواعيد العمل يوميًا" data-en="Daily opening hours">مواعيد العمل يوميًا</span></div>
