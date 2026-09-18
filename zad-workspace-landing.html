@@ -95,10 +95,6 @@ header{
 .hero h1{font-size:clamp(36px,6vw,70px);color:#fff;font-weight:800;letter-spacing:-.01em;max-width:12ch}
 .hero-content .lead{color:rgba(255,255,255,.86);max-width:520px}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
-.hero-links{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:13.5px}
-.hero-links a{color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px}
-.hero-links a:hover{opacity:.8}
-.hero-links .sep{color:rgba(255,255,255,.45)}
 .hero-stats{display:flex;align-items:center;gap:22px;margin-top:42px;flex-wrap:wrap}
 .hero-stats .hs-div{width:1px;height:32px;background:rgba(255,255,255,.3);flex:none}
 .hero-stats b{display:block;color:#fff;font-size:19px;font-weight:800}
@@ -142,6 +138,18 @@ header{
 .service-card .icon-badge{width:48px;height:48px}
 .service-card h3{font-size:16px;margin:0 0 4px;color:var(--green-dark)}
 .service-card p{margin:0;font-size:13.5px;color:var(--muted)}
+
+/* services v3 - large photo tiles with an overlapping card, mqrspaces-inspired */
+.services-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:44px}
+@media (max-width:900px){.services-tiles{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.services-tiles{grid-template-columns:1fr}}
+.stile-media{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/4;background:#e3ddca;box-shadow:var(--shadow)}
+.stile-media img{width:100%;height:100%;object-fit:cover;display:block}
+.stile-card{background:#fff;border-radius:14px;box-shadow:var(--shadow);margin:-38px 14px 0;padding:16px 18px;position:relative;z-index:1}
+.stile-card h3{margin:0 0 4px;font-size:15.5px;color:var(--green-dark)}
+.stile-card p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+.services-extra{margin-top:30px;text-align:center;font-size:13px;color:var(--muted)}
+.services-extra b{color:var(--green-dark)}
 
 /* services v2 - alt design: each service merged into a photo (experiment, revertible) */
 .services-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
@@ -298,17 +306,15 @@ footer b{color:#fff}
     <h1 data-ar="مساحة تساعدك تركّز، وتنتج أكتر" data-en="A space built for focus — and getting things done">مساحة تساعدك تركّز، وتنتج أكتر</h1>
     <p class="lead" data-ar="زاد وورك سبيس مساحة عمل مبتكرة في قلب أسيوط، بتساعد الطلاب وأصحاب الأعمال الحرة يوصلوا لأقصى تركيز وإنتاجية." data-en="Zad Workspace is a modern coworking space in the heart of Asyut, helping students and freelancers reach their best focus and productivity.">زاد وورك سبيس مساحة عمل مبتكرة في قلب أسيوط، بتساعد الطلاب وأصحاب الأعمال الحرة يوصلوا لأقصى تركيز وإنتاجية.</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="https://wa.me/201503767627" target="_blank" rel="noopener">
-        <span data-ar="احجز مكانك دلوقتي" data-en="Book your spot">احجز مكانك دلوقتي</span>
+      <a class="btn btn-primary" href="#contact">
+        <span data-ar="كلمنا واحجز مكانك" data-en="Contact & book">كلمنا واحجز مكانك</span>
       </a>
       <a class="btn btn-light" href="#pricing">
-        <span data-ar="شوف الأسعار" data-en="See pricing">شوف الأسعار</span>
+        <span data-ar="اعرف أسعارنا" data-en="See our prices">اعرف أسعارنا</span>
       </a>
-    </div>
-    <div class="hero-links">
-      <a href="#gallery" data-ar="شوف المكان" data-en="See the space">شوف المكان</a>
-      <span class="sep">·</span>
-      <a href="#contact" data-ar="كلمنا" data-en="Talk to us">كلمنا</a>
+      <a class="btn btn-light" href="#gallery">
+        <span data-ar="شوف زاد من جوا" data-en="See Zad from inside">شوف زاد من جوا</span>
+      </a>
     </div>
     <div class="hero-stats">
       <div class="hs-item"><b data-ar="9ص–12ص" data-en="9AM–12AM">9ص–12ص</b><span class="hs-label" data-ar="مواعيد العمل يوميًا" data-en="Daily opening hours">مواعيد العمل يوميًا</span></div>
@@ -337,6 +343,39 @@ footer b{color:#fff}
       <span class="eyebrow" data-ar="خدماتنا" data-en="Our services">خدماتنا</span>
       <h2 data-ar="كل اللي محتاجه تحت سقف واحد" data-en="Everything you need, under one roof">كل اللي محتاجه تحت سقف واحد</h2>
     </div>
+    <div class="services-tiles">
+      <div class="stile">
+        <div class="stile-media"><img data-img="20241128_080523489_iOS" alt="مساحة مشتركة"></div>
+        <div class="stile-card">
+          <h3 data-ar="مساحة مشتركة" data-en="Shared space">مساحة مشتركة</h3>
+          <p data-ar="للأنشطة المشتركة والمذاكرة والتخطيط مع الآخرين" data-en="For group study, planning and collaborative work">للأنشطة المشتركة والمذاكرة والتخطيط مع الآخرين</p>
+        </div>
+      </div>
+      <div class="stile">
+        <div class="stile-media"><img data-img="20241128_080149597_iOS" alt="مساحة صامتة"></div>
+        <div class="stile-card">
+          <h3 data-ar="مساحة صامتة" data-en="Silent space">مساحة صامتة</h3>
+          <p data-ar="غرفة فردية هادئة، بتريّحك وانت شغال أو بتذاكر لوحدك" data-en="A quiet individual room for solo work and study">غرفة فردية هادئة، بتريّحك وانت شغال أو بتذاكر لوحدك</p>
+        </div>
+      </div>
+      <div class="stile">
+        <div class="stile-media"><img data-img="20241128_082320554_iOS" alt="غرفة اجتماعات"></div>
+        <div class="stile-card">
+          <h3 data-ar="غرفة اجتماعات" data-en="Meeting room">غرفة اجتماعات</h3>
+          <p data-ar="لعقد الاجتماعات وعرض المشاريع والأنشطة الطلابية" data-en="For meetings, project pitches and student activities">لعقد الاجتماعات وعرض المشاريع والأنشطة الطلابية</p>
+        </div>
+      </div>
+      <div class="stile">
+        <div class="stile-media"><img data-img="20241128_083239756_iOS" alt="غرفة كورسات"></div>
+        <div class="stile-card">
+          <h3 data-ar="غرفة كورسات" data-en="Courses room">غرفة كورسات</h3>
+          <p data-ar="مجهزة للكورسات والمجموعات الطلابية وكورسات الإجازات" data-en="Equipped for courses, study groups and holiday classes">مجهزة للكورسات والمجموعات الطلابية وكورسات الإجازات</p>
+        </div>
+      </div>
+    </div>
+    <p class="services-extra"><b data-ar="وكمان متاح عندنا:" data-en="Also available:">وكمان متاح عندنا:</b> <span data-ar="كتب للاستعارة · أدوات مكتبية · طباعة وتصوير · مساحة استراحة · استشارة ومساعدة" data-en="Books to borrow · Office supplies · Printing & copying · Break area · Guidance & support">كتب للاستعارة · أدوات مكتبية · طباعة وتصوير · مساحة استراحة · استشارة ومساعدة</span></p>
+    <!-- V1 (الأيقونات) محفوظة هنا لو عايزين نرجعلها -->
+    <!--
     <div class="services-grid">
       <div class="service-card">
         <div class="icon-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
@@ -375,6 +414,7 @@ footer b{color:#fff}
         <div><h3 data-ar="استشارة ومساعدة" data-en="Guidance & support">استشارة ومساعدة</h3><p data-ar="فريق زاد جاهز يساعدك ويوجهك وانت في المكان" data-en="The Zad team is on hand to help and guide you">فريق زاد جاهز يساعدك ويوجهك وانت في المكان</p></div>
       </div>
     </div>
+    -->
     <!-- النسخة التانية (V2 - صور مدمجة) محفوظة هنا لو عايزين نرجعلها -->
     <!--
     <div class="services-photo-grid">
