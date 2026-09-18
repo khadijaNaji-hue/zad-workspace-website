@@ -145,8 +145,17 @@ header{
 
 /* services v3 - large photo tiles with an overlapping card, mqrspaces-inspired */
 .services-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:44px}
-@media (max-width:900px){.services-tiles{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:480px){.services-tiles{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .services-tiles{
+    display:flex;gap:16px;margin-top:8px;
+    overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline-start:20px;
+    padding:4px 20px 6px;margin-inline:-20px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .services-tiles::-webkit-scrollbar{display:none}
+  .services-tiles .stile{flex:0 0 72%;scroll-snap-align:start}
+}
+@media (max-width:480px){.services-tiles .stile{flex-basis:80%}}
 .stile-media{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/4;background:#e3ddca;box-shadow:var(--shadow)}
 .stile-media img{width:100%;height:100%;object-fit:cover;display:block}
 .stile-card{background:#fff;border-radius:14px;box-shadow:var(--shadow);margin:-38px 14px 0;padding:16px 18px;position:relative;z-index:1}
@@ -154,6 +163,14 @@ header{
 .stile-card p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
 .services-extra{margin-top:30px;text-align:center;font-size:13px;color:var(--muted)}
 .services-extra b{color:var(--green-dark)}
+.sc-controls{display:none;justify-content:center;gap:10px;margin:20px 0 0}
+@media (max-width:900px){.sc-controls{display:flex}}
+.sc-arrow{
+  width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:var(--shadow);
+  border:none;display:flex;align-items:center;justify-content:center;color:var(--green-dark);
+  cursor:pointer;flex:none;padding:0;
+}
+.sc-arrow:active{transform:scale(.94)}
 
 /* services v2 - alt design: each service merged into a photo (experiment, revertible) */
 .services-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
@@ -346,7 +363,15 @@ footer b{color:#fff}
       <span class="eyebrow" data-ar="خدماتنا" data-en="Our services">خدماتنا</span>
       <h2 data-ar="كل اللي محتاجه تحت سقف واحد" data-en="Everything you need, under one roof">كل اللي محتاجه تحت سقف واحد</h2>
     </div>
-    <div class="services-tiles">
+    <div class="sc-controls">
+      <button class="sc-arrow" id="servicesPrev" type="button" aria-label="السابق">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+      <button class="sc-arrow" id="servicesNext" type="button" aria-label="التالي">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="services-tiles" id="servicesTiles">
       <div class="stile">
         <div class="stile-media"><img data-img="20241128_080523489_iOS" alt="مساحة مشتركة"></div>
         <div class="stile-card">
@@ -727,6 +752,24 @@ footer b{color:#fff}
       if (window.ZAD_IMAGES[key]) el.src = window.ZAD_IMAGES[key];
     });
   }
+})();
+</script>
+
+<script>
+(function(){
+  var track = document.getElementById('servicesTiles');
+  var prev = document.getElementById('servicesPrev');
+  var next = document.getElementById('servicesNext');
+  if (!track || !prev || !next) return;
+
+  function step(){
+    var tile = track.querySelector('.stile');
+    if (!tile) return track.clientWidth * 0.72;
+    var gap = parseFloat(getComputedStyle(track).columnGap) || 16;
+    return tile.getBoundingClientRect().width + gap;
+  }
+  prev.addEventListener('click', function(){ track.scrollBy({ left: step(), behavior: 'smooth' }); });
+  next.addEventListener('click', function(){ track.scrollBy({ left: -step(), behavior: 'smooth' }); });
 })();
 </script>
 
