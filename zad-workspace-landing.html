@@ -62,7 +62,7 @@ h2{font-size:clamp(24px,3.5vw,34px);color:var(--green-dark)}
 
 /* header */
 header{
-  position:sticky;top:0;z-index:50;background:rgba(247,244,236,.92);
+  position:sticky;top:0;z-index:50;background:rgba(247,244,236,.85);
   backdrop-filter:saturate(180%) blur(8px);
   border-bottom:1px solid #e6e1d2;
 }
@@ -269,9 +269,18 @@ header{
 .room-card .price{font-size:22px;font-weight:800;color:var(--green-dark);white-space:nowrap}
 .room-card .price small{display:block;font-size:11.5px;font-weight:600;color:var(--muted)}
 
-.cards-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:22px}
-@media (max-width:900px){.cards-strip{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:560px){.cards-strip{grid-template-columns:repeat(2,1fr)}}
+.cards-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
+@media (max-width:900px){
+  .cards-strip{
+    display:flex;gap:12px;
+    overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline-start:20px;
+    padding:4px 20px 6px;margin-inline:-20px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .cards-strip::-webkit-scrollbar{display:none}
+  .cards-strip .card-mini{flex:0 0 42%;scroll-snap-align:start}
+}
+@media (max-width:480px){.cards-strip .card-mini{flex-basis:46%}}
 .card-mini{background:#fff;color:var(--ink);border-radius:12px;padding:16px;text-align:center;box-shadow:var(--shadow)}
 .card-mini .h{font-weight:800;color:var(--green-dark)}
 .card-mini .p{font-size:20px;font-weight:800;margin:6px 0 2px;color:var(--green)}
@@ -279,15 +288,33 @@ header{
 .card-mini .save{margin-top:6px;font-size:11px;font-weight:700;color:var(--wood)}
 
 /* location */
-.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:stretch}
-@media (max-width:860px){.loc-grid{grid-template-columns:1fr}}
+.loc-grid{max-width:640px;margin-inline:auto}
 .info-box{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:28px}
-.info-row{display:flex;gap:14px;margin-bottom:20px}
+.info-row{display:flex;gap:14px;margin-bottom:20px;align-items:flex-start}
 .info-row .ic{width:42px;height:42px;flex:none;border-radius:12px;background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 14px rgba(59,74,48,.28)}
 .info-row h4{margin:0 0 3px;font-size:15px}
 .info-row p{margin:0;color:var(--muted);font-size:14px}
-.map-wrap{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);min-height:320px}
-.map-wrap iframe{width:100%;height:100%;border:0;min-height:320px}
+
+.loc-map-thumb{
+  flex:none;width:64px;height:64px;border-radius:12px;overflow:hidden;position:relative;
+  border:none;padding:0;cursor:pointer;box-shadow:var(--shadow);background:#e3ddca;
+}
+.loc-map-thumb iframe{width:100%;height:100%;border:0;pointer-events:none}
+.loc-map-thumb-hint{
+  position:absolute;inset:0;background:rgba(20,22,15,.18);
+  display:flex;align-items:center;justify-content:center;color:#fff;
+}
+
+.map-modal{display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;padding:20px}
+.map-modal.open{display:flex}
+.map-modal-backdrop{position:absolute;inset:0;background:rgba(20,22,15,.6)}
+.map-modal-box{position:relative;width:100%;max-width:720px;height:70vh;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.map-modal-box iframe{width:100%;height:100%;border:0}
+.map-modal-close{
+  position:absolute;top:10px;right:10px;z-index:2;width:36px;height:36px;border-radius:50%;
+  background:#fff;border:none;color:var(--green-dark);cursor:pointer;box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+}
 
 /* contact */
 .contact-section{text-align:center}
@@ -299,7 +326,8 @@ header{
 
 .social-grid{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:34px}
 .social-item{display:flex;flex-direction:column;align-items:center;gap:9px;width:74px}
-.social-item:hover .icon-badge{transform:translateY(-3px) scale(1.05)}
+.social-item .icon-badge{background:var(--green)}
+.social-item:hover .icon-badge{background:var(--green-dark);transform:translateY(-3px) scale(1.05)}
 .social-item span{font-size:12.5px;font-weight:600;color:var(--muted)}
 
 /* floating whatsapp button */
@@ -655,9 +683,8 @@ footer b{color:#fff}
       </div>
     </div>
 
-    <div style="margin-top:40px">
-      <h3 style="text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--green-dark)" data-ar="باقات كروت زاد الشهرية" data-en="Monthly Zad Card packages"><span class="icon-badge" style="width:34px;height:34px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span> باقات كروت زاد الشهرية</h3>
-      <p class="lead center" data-ar="لو بتذاكر أو بتشتغل كتير، ممكن توفر عن طريق اشتراكات زاد الشهرية" data-en="If you work or study often, save with a monthly Zad subscription">لو بتذاكر أو بتشتغل كتير، ممكن توفر عن طريق اشتراكات زاد الشهرية</p>
+    <div style="margin-top:22px">
+      <h3 style="text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--green-dark)" data-ar="وفر مع باقة زاد" data-en="Save with a Zad package"><span class="icon-badge" style="width:34px;height:34px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span> وفر مع باقة زاد</h3>
       <div class="cards-strip">
         <div class="card-mini"><div class="h">50 <span data-ar="ساعة" data-en="hrs">ساعة</span></div><div class="p">270ج</div><div class="s" data-ar="شهريًا" data-en="/ month">شهريًا</div><div class="save" data-ar="بتوفر 480ج" data-en="Save 480 EGP">بتوفر 480ج</div></div>
         <div class="card-mini"><div class="h">80 <span data-ar="ساعة" data-en="hrs">ساعة</span></div><div class="p">400ج</div><div class="s" data-ar="شهريًا" data-en="/ month">شهريًا</div><div class="save" data-ar="بتوفر 800ج" data-en="Save 800 EGP">بتوفر 800ج</div></div>
@@ -681,14 +708,18 @@ footer b{color:#fff}
 <section id="location">
   <div class="container">
     <div class="center" style="max-width:640px">
-      <span class="eyebrow" data-ar="زورونا" data-en="Visit us">زورونا</span>
+      <span class="eyebrow" data-ar="يلا هتيجي؟" data-en="Visit us">يلا هتيجي؟</span>
       <h2 data-ar="فين هتلاقينا" data-en="Where to find us">فين هتلاقينا</h2>
     </div>
     <div class="loc-grid" style="margin-top:32px">
       <div class="info-box">
         <div class="info-row">
           <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div><h4 data-ar="العنوان" data-en="Address">العنوان</h4><p data-ar="شارع المحافظة، بجوار عصائر الفانوس، الدور الثاني (أمام سوشي موتشي) — أسيوط" data-en="Al-Mohafza St., next to Al-Fanous Juices, 2nd floor (opposite Sushi Mochi) — Asyut">شارع المحافظة، بجوار عصائر الفانوس، الدور الثاني (أمام سوشي موتشي) — أسيوط</p></div>
+          <div style="flex:1"><h4 data-ar="العنوان" data-en="Address">العنوان</h4><p data-ar="شارع المحافظة، بجوار عصائر الفانوس، الدور الثاني (أمام سوشي موتشي) — أسيوط" data-en="Al-Mohafza St., next to Al-Fanous Juices, 2nd floor (opposite Sushi Mochi) — Asyut">شارع المحافظة، بجوار عصائر الفانوس، الدور الثاني (أمام سوشي موتشي) — أسيوط</p></div>
+          <button class="loc-map-thumb" id="mapThumbBtn" type="button" aria-label="كبّر الخريطة">
+            <iframe src="https://www.google.com/maps?q=55RQ%2B2R5,+Asyut&output=embed" loading="lazy" tabindex="-1" title="خريطة الموقع"></iframe>
+            <span class="loc-map-thumb-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
+          </button>
         </div>
         <div class="info-row">
           <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
@@ -711,12 +742,19 @@ footer b{color:#fff}
           <span data-ar="راسلنا على واتساب" data-en="Message us on WhatsApp">راسلنا على واتساب</span>
         </a>
       </div>
-      <div class="map-wrap">
-        <iframe src="https://www.google.com/maps?q=55RQ%2B2R5,+Asyut&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Zad Workspace location"></iframe>
-      </div>
     </div>
   </div>
 </section>
+
+<div class="map-modal" id="mapModal">
+  <div class="map-modal-backdrop" id="mapModalBackdrop"></div>
+  <div class="map-modal-box">
+    <button class="map-modal-close" id="mapModalClose" type="button" aria-label="قفل الخريطة">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <iframe src="https://www.google.com/maps?q=55RQ%2B2R5,+Asyut&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="خريطة الموقع مكبّرة"></iframe>
+  </div>
+</div>
 
 <section id="join">
   <div class="container center" style="max-width:640px">
@@ -735,16 +773,10 @@ footer b{color:#fff}
 <section class="contact-section" id="contact">
   <div class="container">
     <span class="eyebrow" data-ar="تواصل معانا" data-en="Get in touch">تواصل معانا</span>
-    <h2 data-ar="جاهز تبدأ؟" data-en="Ready to get started?">جاهز تبدأ؟</h2>
-    <p class="lead center" data-ar="احجز مكانك دلوقتي أو كلمنا لو عندك أي سؤال" data-en="Book your spot now, or reach out if you have any questions">احجز مكانك دلوقتي أو كلمنا لو عندك أي سؤال</p>
-    <div class="contact-actions">
-      <a class="btn btn-primary" href="https://wa.me/201503767627" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.61 15.06L2 22l5.09-1.35A10 10 0 1 0 12 2Zm5.63 14.27c-.24.68-1.19 1.25-1.96 1.41-.53.11-1.22.2-3.55-.76-2.98-1.23-4.9-4.24-5.05-4.44-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37h.57c.18 0 .43-.03.66.51.24.56.82 1.94.9 2.08.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.71 1.19 1.53 1.93 1.05.95 1.93 1.25 2.21 1.39.28.14.44.12.61-.07.16-.19.7-.81.89-1.09.19-.28.37-.23.63-.14.26.1 1.63.78 1.91.92.28.14.47.21.54.33.07.12.07.68-.17 1.36Z"/></svg>
-        <span data-ar="راسلنا على واتساب" data-en="Message us on WhatsApp">راسلنا على واتساب</span>
-      </a>
-    </div>
+    <h2 data-ar="كل طرق التواصل هنا" data-en="Every way to reach us">كل طرق التواصل هنا</h2>
+    <p class="lead center" data-ar="تابعونا على السوشيال ميديا، أو ابعتولنا رأيكوا واقتراحاتكوا في الفورم تحت" data-en="Follow us on social media, or send us your thoughts in the form below">تابعونا على السوشيال ميديا، أو ابعتولنا رأيكوا واقتراحاتكوا في الفورم تحت</p>
     <div class="text-links" style="justify-content:center">
-      <a href="tel:01503767627" data-ar="اتصال مباشر" data-en="Call us">اتصال مباشر</a>
+      <a href="tel:01503767627" data-ar="اتصال" data-en="Call">اتصال</a>
     </div>
 
     <div class="social-grid">
@@ -822,6 +854,24 @@ footer b{color:#fff}
       menu.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
     });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var thumb = document.getElementById('mapThumbBtn');
+  var modal = document.getElementById('mapModal');
+  var closeBtn = document.getElementById('mapModalClose');
+  var backdrop = document.getElementById('mapModalBackdrop');
+  if (!thumb || !modal) return;
+  function open(){ modal.classList.add('open'); }
+  function close(){ modal.classList.remove('open'); }
+  thumb.addEventListener('click', open);
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (backdrop) backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') close();
   });
 })();
 </script>
