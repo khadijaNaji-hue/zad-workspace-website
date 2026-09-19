@@ -17,14 +17,16 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "ZAD PICS")
 OUT = os.path.join(HERE, "zad-workspace_images.js")
 
-# (file stem, longest side in px, webp quality)
+# (file stem, longest side in px, webp quality[, x focus 0..1])
+# A 4th value crops a landscape photo to a 3:4 portrait around that horizontal
+# position, since the services tiles are portrait.
 IMAGES = [
     ("20241128_080400680_iOS", 2133, 76),  # hero (full-bleed)
     ("20241128_083017012_iOS", 1600, 74),  # about
     # services tiles
     ("20241128_081204683_iOS", 1200, 74),  # shared space
-    ("20241128_080149597_iOS", 1200, 74),  # silent space (interim)
-    ("20241128_082320554_iOS", 1200, 74),  # meeting room (interim)
+    ("silent-room", 1200, 74, 0.45),  # silent space (landscape -> portrait crop, x focus)
+    ("meeting-room", 1200, 74, 0.50),  # meeting room (landscape -> portrait crop, x focus)
     ("20241128_084314395_iOS", 1200, 74),  # courses room
     # gallery
     ("20241128_084810212_iOS", 1200, 74),  # reception mirror
@@ -36,9 +38,20 @@ IMAGES = [
 ]
 
 
-def encode(stem, long_side, quality):
-    im = Image.open(os.path.join(SRC, stem + ".heic"))
-    im = ImageOps.exif_transpose(im).convert("RGB")
+def open_source(stem):
+    for ext in (".heic", ".jpg"):
+        path = os.path.join(SRC, stem + ext)
+        if os.path.exists(path):
+            return Image.open(path)
+    raise FileNotFoundError(stem)
+
+
+def encode(stem, long_side, quality, focus=None):
+    im = ImageOps.exif_transpose(open_source(stem)).convert("RGB")
+    if focus is not None and im.width > im.height:
+        crop_w = round(im.height * 3 / 4)
+        left = round(min(max(im.width * focus - crop_w / 2, 0), im.width - crop_w))
+        im = im.crop((left, 0, left + crop_w, im.height))
     im.thumbnail((long_side, long_side), Image.LANCZOS)
     buf = io.BytesIO()
     im.save(buf, "WEBP", quality=quality, method=6)
@@ -47,8 +60,8 @@ def encode(stem, long_side, quality):
 
 parts = []
 total = 0
-for stem, long_side, quality in IMAGES:
-    b64, size = encode(stem, long_side, quality)
+for stem, long_side, quality, *rest in IMAGES:
+    b64, size = encode(stem, long_side, quality, rest[0] if rest else None)
     total += size
     print(f"{stem}: {size // 1024} KB")
     parts.append(f'"{stem}": "data:image/webp;base64,{b64}"')
